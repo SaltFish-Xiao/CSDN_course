@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block article %}
+    <section class="main_section">
+        <hr>
+        <section id="user_manage">
+            <nav>
+                <p><a href="user.html">个人资料</a></p>
+                <p><a href="user_course.html">我的课程</a></p>
+                <p><a href="user_shoppingcart.html">购物车</a></p>
+            </nav>
+            <section class="user_info">
+                <div class="user_info_wrapper">
+                    <table id="user_course_table" cellpadding="0" cellspacing="0">
+                        <tr id="user_info_course_tr_first">
+                            <th width="250px">课程名称</th>
+                            <th width="200px">价格</th>
+                            <th width="100px">操作</th>
+                        </tr>
+                        <tr class="user_info_course_tr">
+                            <td>Python语言基础</td>
+                            <td>2019-07-22</td>
+                            <td><a href="#">立即观看</a></td>
+                        </tr>
+
+                        <tr class="user_info_course_tr">
+                            <td>Django从入门到放弃</td>
+                            <td>2019-07-22</td>
+                            <td><a href="#">立即观看</a></td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+        </section>
+    </section>
+{% endblock %}
+
