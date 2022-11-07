@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import Course,Category
 # Create your views here.
 def index_handler(request):
-    context = {}
+    context = request.context
     category_s =Category.objects.all()
     course_data_s = []
     for category in category_s:

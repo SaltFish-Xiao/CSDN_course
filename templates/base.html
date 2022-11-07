@@ -8,12 +8,18 @@
 </head>
 <body>
 <!-- 注册 -->
-<div id="register" hidden="hidden">
+<div id="register"
+     {% if not register_message %}
+     hidden="hidden"
+    {% endif %}
+>
     <h2 class="form_p">注册</h2>
     <p id="register_message">
+        {{ register_message }}
         <!--信息有误-->
     </p>
-    <form action="#" method="post" id="register_form">
+    <form action="{% url 'user_register' %}" method="post" id="register_form">
+        {% csrf_token %}
         <input id="register_account" type="text" name="account" placeholder="账号(数字、英文、下换线，8-16位)"><br/>
         <input id="register_password" type="password" name="password" placeholder="密码(数字、英文、下换线，6-16位)"><br/>
         <!--<input type="password" name="repassword" placeholder="确认密码"><br/>-->
@@ -44,12 +50,15 @@
         </form>
     </span>
     <span class="user">
+        {% if not session_user %}
         <a href="javascript:show('login')">登录</a>/
         <a href="javascript:show('register')">注册</a>
         <!-- 已经登录显示的内容 -->
+        {% else %}
         你好：
-        <a href="user.html">用户1</a>
-        <a href="#">注销</a>
+        <a href="{% url 'user_index' %}">{{  session_user.account}}</a>
+        <a href="{% url 'user_logout' %}">注销</a>
+        {% endif %}
     </span>
     {% endblock %}
 </header>
