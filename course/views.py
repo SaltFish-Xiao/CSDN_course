@@ -18,7 +18,9 @@ def index_handler(request):
 
 
 def course_handler(request,course_id):
-    return None
+
+    
+    return render(request,'course.html')
 
 
 def video_handler(request,course_id):

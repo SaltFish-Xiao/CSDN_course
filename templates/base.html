@@ -28,12 +28,17 @@
 </div>
 
 <!-- 登录 -->
-<div id="login" hidden="hidden">
+<div id="login"
+     {% if not login_message %}
+     hidden="hidden"
+    {% endif %}>
     <h2 class="form_p">登录</h2>
     <p id="login_message">
+        {{ login_message }}
         <!--信息有误-->
     </p>
-    <form action="#" method="post" id="login_form">
+    <form action="{% url 'user_login' %}" method="post" id="login_form">
+        {% csrf_token %}
         <input id="login_account" type="text" name="account" placeholder="账号"><br>
         <input id="login_password" type="password" name="password" placeholder="密码"><br>
         <input id="login_submit" type="submit" value="登录">

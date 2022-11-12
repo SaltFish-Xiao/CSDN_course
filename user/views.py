@@ -1,4 +1,4 @@
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render,HttpResponse,redirect,reverse
 from .models import User
 #导入商城首页
 from course import views as course_views
@@ -6,7 +6,19 @@ from course import views as course_views
 
 # Create your views here.
 def index_handler(request):
-    return None
+    context = request.context
+    session_user = request.session['session_user']
+    user = User.objects.get(id = session_user.get('id'))
+    context['user']=user
+    if request.method == 'GET':
+        return render(request,'user.html',context)
+    else:
+        user.username = request.POST.get('username')
+        user.gender = request.POST.get('gender')
+        user.tel = request.POST.get('tel')
+        user.save()
+        return redirect(reverse('user_index'))
+
 
 
 def course_handler(request):
@@ -18,7 +30,20 @@ def shoppingCart_handler(request):
 
 
 def login_handler(request):
-    return None
+    if request.method !='POST':
+        return HttpResponse(status=403)
+    context = request.context
+    account = request.POST.get('account')
+    password = request.POST.get('password')
+    user_s = User.objects.filter(account = account,password=password)
+    if user_s:
+        user = user_s[0]
+        request.session['session_user']={'id':user.id,'account':user.account}
+        return redirect(reverse('course_index'))
+    else:
+        context['login_message']='账号或密码错误'
+        return course_views.index_handler(request)
+
 
 
 def register_handler(request):
@@ -43,7 +68,8 @@ def register_handler(request):
 
 
 def logout_hander(request):
-    return None
+    request.session['session_user']=None
+    return redirect(reverse('course_index'))
 
 
 def puchase_handler(request,course_id):
